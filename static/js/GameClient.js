@@ -1,25 +1,15 @@
-var isDrawingPlayer = false;
+/* global NetworkClient, DrawingController,  */
+
 var currentImage = null;
 var timer = null;
 
 var GameClient = function () {
-    function showPlayers(players) {
+    var showPlayers = function (players) {
         var list = document.querySelector('#playersList > ul');
         // clear all childs before redraw
         list.innerHTML = '';
 
         var playersIDs = Object.keys(players);
-
-
-        if (playersIDs.length == 1) {
-            console.log('First player: drawing mode enabled')
-            isDrawingPlayer = true;
-
-            timer = setTimeout(function () {
-                sendCurrentImage();
-            }, 2000);
-
-        }
 
         var player = null;
         for (var i = 0; i < playersIDs.length; i++) {
@@ -33,36 +23,57 @@ var GameClient = function () {
 
             list.appendChild(li);
         }
-    }
+    };
 
     var newGame = function (player) {
         NetworkClient.newGame(player);
-    }
+    };
 
+    // send current canvas state via NetworkingController to the server
     var sendCurrentImage = function () {
-        if (currentImage) {
-            console.log('Client | Sending image to the server');
-            NetworkClient.sendImage(JSON.stringify(currentImage));
+        if (DrawingController.drawingModeEnabled()) {
+            // console.log('Client | Sending image to the server');
+            NetworkClient.sendImage(JSON.stringify(DrawingController.getCurrentImage()));
         }
         clearTimeout(timer);
 
         timer = setTimeout(function () {
             sendCurrentImage();
         }, 500);
-    }
+    };
 
     var redrawImage = function (image) {
+        var currentImage = DrawingController.getCurrentImage();
+
         if (currentImage) {
-            console.log('Client | Redrawing image');
+            //console.log('Client | Redrawing image');
             currentImage.clear();
             currentImage.loadFromJSON(image, currentImage.renderAll.bind(currentImage));
         }
-    }
+    };
+
+    var enableDrawingMode = function () {
+        console.log('drawing mode enabled');
+
+        // lock another users' canvas
+        //NetworkingController.lockOthers(player);
+        DrawingController.enableDrawingMode();
+
+        timer = setTimeout(function () {
+            sendCurrentImage();
+        }, 2000);
+    };
 
     return {
         showPlayers: showPlayers,
-        redrawImage: redrawImage
-    }
+        redrawImage: redrawImage,
+        enableDrawingMode: enableDrawingMode
+    };
 }();
+
+setTimeout(function () {
+    DrawingController.initDrawingContext();
+}, 1000);
+
 
 

@@ -21,7 +21,7 @@ var NetworkClient = function () {
     }
 
     function sendImage(image) {
-        console.log('NetworkClient | Emit send_image event');
+        // console.log('NetworkClient | Emit send_image event');
         socket.emit('send_image', image);
     }
 
