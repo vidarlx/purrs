@@ -1,4 +1,6 @@
-var NetworkClient = function () {
+/* global socket, GameClient, NetworkingPlayer  */
+
+var NetworkingController = function () {
     function handleEvents() {
         socket.on('playersListUpdated', function (players) {
             GameClient.showPlayers(players);
@@ -16,20 +18,25 @@ var NetworkClient = function () {
             p2: player
         };
 
-        console.log('NetworkClient | Emit new_game event');
+        console.log('NetworkingController | Emit new_game event');
         socket.emit('new_game', players);
     }
 
     function sendImage(image) {
-        // console.log('NetworkClient | Emit send_image event');
+        // console.log('NetworkingController | Emit send_image event');
         socket.emit('send_image', image);
+    }
+    
+    function addToDrawingQueue(player) {
+        socket.emit('add_to_queue', player);
     }
 
     return {
         handleEvents: handleEvents,
         newGame: newGame,
-        sendImage: sendImage
+        sendImage: sendImage,
+        addToDrawingQueue: addToDrawingQueue
     };
 }();
 
-NetworkClient.handleEvents();
+NetworkingController.handleEvents();

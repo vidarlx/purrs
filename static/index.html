@@ -13,7 +13,7 @@
         </div>
 
         <div id="paintingArea">
-            <button id="sendAnswer" onClick="GameClient.enableDrawingMode()">Draw</button>
+            <button id="sendAnswer" onClick="GameClient.addToDrawQueue()">Draw</button>
             <div id="canvasContainer">
                 <canvas id="c" width="500" height="500" style="border:1px solid #aaa"></canvas>
             </div>
@@ -22,13 +22,6 @@
                 <button id="clear-canvas" class="btn btn-info">Clear</button><br>
 
                 <div id="drawing-mode-options">
-                    <label for="drawing-mode-selector">Mode:</label>
-                    <select id="drawing-mode-selector">
-                        <option>Pencil</option>
-                        <option>Spray</option>
-                    </select><br>
-
-
                     <label for="drawing-color">Color</label>
                     <input type="color" value="#000" id="drawing-color" /><br>
                 </div>

@@ -1,4 +1,4 @@
-/* global NetworkClient, DrawingController,  */
+/* global NetworkingController, DrawingController,  */
 
 var currentImage = null;
 var timer = null;
@@ -26,14 +26,14 @@ var GameClient = function () {
     };
 
     var newGame = function (player) {
-        NetworkClient.newGame(player);
+        NetworkingController.newGame(player);
     };
 
     // send current canvas state via NetworkingController to the server
     var sendCurrentImage = function () {
         if (DrawingController.drawingModeEnabled()) {
             // console.log('Client | Sending image to the server');
-            NetworkClient.sendImage(JSON.stringify(DrawingController.getCurrentImage()));
+            NetworkingController.sendImage(JSON.stringify(DrawingController.getCurrentImage()));
         }
         clearTimeout(timer);
 
@@ -55,8 +55,8 @@ var GameClient = function () {
     var enableDrawingMode = function () {
         console.log('drawing mode enabled');
 
-        // lock another users' canvas
-        //NetworkingController.lockOthers(player);
+
+
         DrawingController.enableDrawingMode();
 
         timer = setTimeout(function () {
@@ -64,10 +64,16 @@ var GameClient = function () {
         }, 2000);
     };
 
+    var addToDrawQueue = function (player) {
+        // add to queue
+        NetworkingController.addToDrawingQueue(player);
+    };
+
     return {
         showPlayers: showPlayers,
         redrawImage: redrawImage,
-        enableDrawingMode: enableDrawingMode
+        enableDrawingMode: enableDrawingMode,
+        addToDrawQueue: addToDrawQueue
     };
 }();
 
