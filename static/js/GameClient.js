@@ -53,9 +53,7 @@ var GameClient = function () {
     };
 
     var enableDrawingMode = function () {
-        console.log('drawing mode enabled');
-
-
+        console.log('Drawing mode enabled');
 
         DrawingController.enableDrawingMode();
 
@@ -71,7 +69,7 @@ var GameClient = function () {
     
     var startNewGame = function (gameHost) {
         if (socket.id === gameHost) {
-            DrawingController.enableDrawingMode();
+            enableDrawingMode();
         }
     };
 
