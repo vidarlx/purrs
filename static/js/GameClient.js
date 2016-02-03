@@ -64,9 +64,9 @@ var GameClient = function () {
         }, 2000);
     };
 
-    var addToDrawQueue = function (player) {
+    var addToDrawQueue = function () {
         // add to queue
-        NetworkingController.addToDrawingQueue(player);
+        NetworkingController.addToDrawingQueue();
     };
 
     return {

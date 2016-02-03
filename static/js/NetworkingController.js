@@ -27,8 +27,8 @@ var NetworkingController = function () {
         socket.emit('send_image', image);
     }
     
-    function addToDrawingQueue(player) {
-        socket.emit('add_to_queue', player);
+    function addToDrawingQueue() {
+        socket.emit('add_to_queue', socket.id);
     }
 
     return {
