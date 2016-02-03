@@ -68,12 +68,19 @@ var GameClient = function () {
         // add to queue
         NetworkingController.addToDrawingQueue();
     };
+    
+    var startNewGame = function (gameHost) {
+        if (socket.id === gameHost) {
+            DrawingController.enableDrawingMode();
+        }
+    };
 
     return {
         showPlayers: showPlayers,
         redrawImage: redrawImage,
         enableDrawingMode: enableDrawingMode,
-        addToDrawQueue: addToDrawQueue
+        addToDrawQueue: addToDrawQueue,
+        startNewGame: startNewGame
     };
 }();
 

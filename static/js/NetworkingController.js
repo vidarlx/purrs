@@ -5,6 +5,10 @@ var NetworkingController = function () {
         socket.on('playersListUpdated', function (players) {
             GameClient.showPlayers(players);
         });
+        
+        socket.on('newGame', function (gameHost) {
+            GameClient.startNewGame(gameHost);
+        });
 
         socket.on('image_updated', function (image) {
             GameClient.redrawImage(image);
