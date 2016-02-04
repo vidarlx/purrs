@@ -16,7 +16,7 @@ var GameClient = function () {
             player = players[playersIDs[i]];
 
             var li = document.createElement('li');
-            li.innerHTML = player.name;
+            li.innerHTML = player.name + ' (' + player.points + ')';
             li.addEventListener('click', function () {
                 newGame(player.name);
             }, false);
