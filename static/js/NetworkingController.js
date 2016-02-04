@@ -34,12 +34,20 @@ var NetworkingController = function () {
     function addToDrawingQueue() {
         socket.emit('add_to_queue', socket.id);
     }
+    
+    function sendAnswer(playerId, answer) {
+        socket.emit('new_answer', {
+            playerId: playerId,
+            answer: answer
+        });
+    }
 
     return {
         handleEvents: handleEvents,
         newGame: newGame,
         sendImage: sendImage,
-        addToDrawingQueue: addToDrawingQueue
+        addToDrawingQueue: addToDrawingQueue,
+        sendAnswer: sendAnswer
     };
 }();
 

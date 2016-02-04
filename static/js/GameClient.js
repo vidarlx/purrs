@@ -1,4 +1,4 @@
-/* global NetworkingController, DrawingController,  */
+/* global NetworkingController, DrawingController, socket */
 
 var currentImage = null;
 var timer = null;
@@ -67,6 +67,11 @@ var GameClient = function () {
         NetworkingController.addToDrawingQueue();
     };
     
+    var sendAnswer = function () {
+        var answer = document.querySelector('#answer').value;
+        NetworkingController.sendAnswer(socket.id, answer);
+    };
+    
     var startNewGame = function (gameHost) {
         if (socket.id === gameHost) {
             enableDrawingMode();
@@ -78,7 +83,8 @@ var GameClient = function () {
         redrawImage: redrawImage,
         enableDrawingMode: enableDrawingMode,
         addToDrawQueue: addToDrawQueue,
-        startNewGame: startNewGame
+        startNewGame: startNewGame,
+        sendAnswer: sendAnswer
     };
 }();
 

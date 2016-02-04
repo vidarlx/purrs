@@ -1,10 +1,12 @@
+/* global fabric */
+
 var DrawingController = function () {
     var canvas = null;
     var drawingMode = false;
 
     var initDrawingContext = function () {      
         var $ = function (id) {
-            return document.getElementById(id)
+            return document.getElementById(id);
         };
 
         if (!canvas) {
