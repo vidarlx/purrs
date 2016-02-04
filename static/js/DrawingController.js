@@ -58,13 +58,15 @@ var DrawingController = function () {
 
     var disableDrawingMode = function () {
         drawingMode = false;
+        initDrawingContext();
     };
 
     return {
         initDrawingContext: initDrawingContext,
         getCurrentImage: getCurrentImage,
         drawingModeEnabled: drawingModeEnabled,
-        enableDrawingMode: enableDrawingMode
+        enableDrawingMode: enableDrawingMode,
+        disableDrawingMode: disableDrawingMode
     };
 
 }();

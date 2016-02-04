@@ -61,6 +61,12 @@ var GameClient = function () {
             sendCurrentImage();
         }, 2000);
     };
+    
+    var disableDrawingMode = function () {
+        console.log('Drawing mode disabled');
+
+        DrawingController.disableDrawingMode();
+    };
 
     var addToDrawQueue = function () {
         // add to queue
@@ -75,6 +81,8 @@ var GameClient = function () {
     var startNewGame = function (gameHost) {
         if (socket.id === gameHost) {
             enableDrawingMode();
+        } else {
+            disableDrawingMode();
         }
     };
 
