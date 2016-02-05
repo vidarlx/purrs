@@ -77,10 +77,23 @@ var GameClient = function () {
         var answer = document.querySelector('#answer').value;
         NetworkingController.sendAnswer(socket.id, answer);
     };
+    
+    var showAnswerBox = function () {
+        document.querySelector('#messagingBox').style.display = 'block';
+    };
+    
+    var hideAnswerBox = function () {
+        document.querySelector('#messagingBox').style.display = 'none';
+    };
 
     var showWordToGuess = function (word) {
-        var wordBox = document.querySelector('#wordBox > p');
+        var wordBox = document.querySelector('#wordBox');
         wordBox.innerHTML = word;
+        wordBox.style.display = 'block';
+    };
+    
+    var hideWordBox = function (word) {
+        document.querySelector('#wordBox').style.display = 'none';
     };
 
     var startNewGame = function (data) {
@@ -88,8 +101,11 @@ var GameClient = function () {
 
         if (socket.id === data.host) {
             enableDrawingMode();
+            hideAnswerBox();
             showWordToGuess(data.word);
         } else {
+            hideWordBox();
+            showAnswerBox();
             disableDrawingMode();
         }
     };
