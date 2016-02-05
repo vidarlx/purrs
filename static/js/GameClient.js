@@ -61,7 +61,7 @@ var GameClient = function () {
             sendCurrentImage();
         }, 2000);
     };
-    
+
     var disableDrawingMode = function () {
         console.log('Drawing mode disabled');
 
@@ -72,17 +72,23 @@ var GameClient = function () {
         // add to queue
         NetworkingController.addToDrawingQueue();
     };
-    
+
     var sendAnswer = function () {
         var answer = document.querySelector('#answer').value;
         NetworkingController.sendAnswer(socket.id, answer);
     };
-    
-    var startNewGame = function (gameHost) {
+
+    var showWordToGuess = function (word) {
+        var wordBox = document.querySelector('#wordBox > p');
+        wordBox.innerHTML = word;
+    };
+
+    var startNewGame = function (data) {
         DrawingController.clearCanvas();
-        
-        if (socket.id === gameHost) {
+
+        if (socket.id === data.host) {
             enableDrawingMode();
+            showWordToGuess(data.word);
         } else {
             disableDrawingMode();
         }
