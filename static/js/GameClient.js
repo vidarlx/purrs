@@ -79,6 +79,8 @@ var GameClient = function () {
     };
     
     var startNewGame = function (gameHost) {
+        DrawingController.clearCanvas();
+        
         if (socket.id === gameHost) {
             enableDrawingMode();
         } else {

@@ -60,13 +60,18 @@ var DrawingController = function () {
         drawingMode = false;
         initDrawingContext();
     };
+    
+    var clearCanvas = function () {
+        canvas.clear();
+    };
 
     return {
         initDrawingContext: initDrawingContext,
         getCurrentImage: getCurrentImage,
         drawingModeEnabled: drawingModeEnabled,
         enableDrawingMode: enableDrawingMode,
-        disableDrawingMode: disableDrawingMode
+        disableDrawingMode: disableDrawingMode,
+        clearCanvas: clearCanvas
     };
 
 }();
