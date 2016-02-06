@@ -15,6 +15,11 @@
                     </ul>
                 </div>
                 <button id="addToQueue" onClick="GameClient.addToDrawQueue()">Draw</button>
+                
+                <div id="wordBox">
+                    You are drawing now. The word is: 
+                    <p id="word"></p>
+                </div>
             </div>
 
             <div id="paintingArea"> 
@@ -41,9 +46,7 @@
                     <button id="sendAnswer" onClick="GameClient.sendAnswer()">Send</button>
                 </div>
 
-                <div id="wordBox">
-                    <p></p>
-                </div>
+                
             </div>
 
             <div style="clear: both;"></div>

@@ -88,12 +88,14 @@ var GameClient = function () {
     };
 
     var showWordToGuess = function (word) {
+        var wordElement = document.querySelector('#word');
+        wordElement.innerHTML = word;
+        
         var wordBox = document.querySelector('#wordBox');
-        wordBox.innerHTML = word;
         wordBox.style.display = 'block';
     };
     
-    var hideWordBox = function (word) {
+    var hideWordBox = function () {
         document.querySelector('#wordBox').style.display = 'none';
     };
     
@@ -117,11 +119,11 @@ var GameClient = function () {
 
         if (socket.id === data.host) {
             enableDrawingMode();
-            hideAnswerBox();
+            //showAnswerBox();
             showWordToGuess(data.word);
         } else {
             hideWordBox();
-            showAnswerBox();
+            //showAnswerBox();
             disableDrawingMode();
         }
     };

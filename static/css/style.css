@@ -21,6 +21,15 @@
     padding: 0;
 }
 
+#left-pane #wordBox {
+    display: none;
+    margin: 10px 0;
+}
+
+#left-pane #wordBox #word {
+    font-weight: bold;
+}
+
 /*** end of left pane */
 
 /***** right pane */
