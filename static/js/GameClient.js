@@ -100,7 +100,6 @@ var GameClient = function () {
     };
     
     var appendMessages = function (data) {
-        console.log(data)
         var messagesList = document.querySelector('ul#messagesList');
         var li = document.createElement('li');
         var user = document.createElement('span');
@@ -113,7 +112,17 @@ var GameClient = function () {
 
         messagesList.appendChild(li);
     };
-
+    
+    var showWarningBox = function () {
+        var warningBox = document.querySelector('#waitingBox');
+        warningBox.style.display = 'block';
+    };
+    
+    var hideWarningBox = function () {
+        var warningBox = document.querySelector('#waitingBox');
+        warningBox.style.display = 'none';
+    };
+    
     var startNewGame = function (data) {
         DrawingController.clearCanvas();
 
@@ -126,7 +135,13 @@ var GameClient = function () {
             //showAnswerBox();
             disableDrawingMode();
         }
+        
+        hideWarningBox();
     };
+    
+    var cleanAfterGame = function () {
+        showWordBox();
+    }
     
     /** end of gui methods */
 

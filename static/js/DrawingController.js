@@ -4,7 +4,7 @@ var DrawingController = function () {
     var canvas = null;
     var drawingMode = false;
 
-    var initDrawingContext = function () {      
+    var initDrawingContext = function () {
         var $ = function (id) {
             return document.getElementById(id);
         };
@@ -13,17 +13,17 @@ var DrawingController = function () {
             console.log('Creating drawing context');
             canvas = new fabric.Canvas('c', {});
         }
-         
+
         canvas.isDrawingMode = DrawingController.drawingModeEnabled();
 
         fabric.Object.prototype.transparentCorners = false;
 
         var drawingColorEl = $('drawing-color'),
-            drawingShadowColorEl = $('drawing-shadow-color'),
-            drawingLineWidthEl = 10,
-            drawingShadowWidth = 0,
-            drawingShadowOffset = 0,
-            clearEl = $('clear-canvas');
+                drawingShadowColorEl = $('drawing-shadow-color'),
+                drawingLineWidthEl = 10,
+                drawingShadowWidth = 0,
+                drawingShadowOffset = 0,
+                clearEl = $('clear-canvas');
 
         clearEl.onclick = function () {
             canvas.clear();
@@ -60,9 +60,11 @@ var DrawingController = function () {
         drawingMode = false;
         initDrawingContext();
     };
-    
+
     var clearCanvas = function () {
-        canvas.clear();
+        if (canvas) {
+            canvas.clear();
+        }
     };
 
     return {
