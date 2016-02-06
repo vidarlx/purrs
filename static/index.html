@@ -4,42 +4,54 @@
         <title>wordf</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
     <body>
-        <div id="playersList">
-            <ul>
-                <!-- players list loaded dynamically -->
-            </ul>
-        </div>
-
-        <div id="paintingArea">
-            <button id="sendAnswer" onClick="GameClient.addToDrawQueue()">Draw</button>
-            <div id="canvasContainer">
-                <canvas id="c" width="500" height="500" style="border:1px solid #aaa"></canvas>
+        <div id="gameContainer">
+            <div id="left-pane">
+                <div id="playersList">
+                    <ul>
+                        <!-- players list loaded dynamically -->
+                    </ul>
+                </div>
+                <button id="addToQueue" onClick="GameClient.addToDrawQueue()">Draw</button>
             </div>
 
-            <div style="display: inline-block; margin-left: 10px">
-                <button id="clear-canvas" class="btn btn-info">Clear</button><br>
+            <div id="paintingArea"> 
+                <div id="canvasContainer">
+                    <canvas id="c" width="500" height="500"></canvas>
+                </div>
 
-                <div id="drawing-mode-options">
-                    <label for="drawing-color">Color</label>
-                    <input type="color" value="#000" id="drawing-color" /><br>
+                <div id="toolbox">
+                    <button id="clear-canvas" class="btn btn-info">Clear</button><br>
+
+                    <div id="drawing-mode-options">
+                        <label for="drawing-color">Color</label>
+                        <input type="color" value="#000" id="drawing-color" /><br>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="messagingBox" style="display: none;">
-            Guess: <input type="text" id="answer" />
-            <button id="sendAnswer" onClick="GameClient.sendAnswer()">Send</button>
-        </div>
+            <div id="right-pane">
+                <div id="messagingBox">
+                    <div id="messages">
+                        <ul id="messagesList"></ul>
+                    </div>
+                    <input type="text" id="answer" />
+                    <button id="sendAnswer" onClick="GameClient.sendAnswer()">Send</button>
+                </div>
 
-        <div id="wordBox" style="display: none;">
-            <p></p>
+                <div id="wordBox">
+                    <p></p>
+                </div>
+            </div>
+
+            <div style="clear: both;"></div>
         </div>
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
-                var socket = io();
+                    var socket = io();
         </script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
         <script src="js/GameClient.js"></script>

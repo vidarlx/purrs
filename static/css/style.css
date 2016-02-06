@@ -1,0 +1,78 @@
+#gameContainer {
+    width: 1000px;
+    margin: 0 auto;
+    border: 1px solid black;
+    font-family: Gill Sans, Verdana;
+    font-size: 11px;
+}
+
+
+/***** left pane */
+
+#left-pane {
+    float: left;
+    padding:0 10px;
+    width:150px;
+    overflow: hidden;
+}
+
+#left-pane #playersList ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+/*** end of left pane */
+
+/***** right pane */
+
+#right-pane {
+    float: left;
+    padding:10px;
+    width:300px;
+    overflow: hidden;
+}
+
+#right-pane #messages {
+    border:1px solid #aaa;
+    width:300px;
+    height:500px;
+    margin: 0 0 10px 0;
+}
+
+#right-pane #answer {
+    width: 246px;
+}
+
+#right-pane ul#messagesList {
+    list-style-type: none;
+    padding: 0 10px 10px 10px;
+}
+
+#right-pane ul#messagesList .user {
+    color: #060;
+}
+
+/*** end of right pane */
+
+
+
+/***** painting area */
+
+#paintingArea {
+    float: left;
+    padding:10px 0;
+}
+
+
+#toolbox {
+    padding:5px;
+}
+
+#c {
+    border:1px solid #aaa;
+}
+
+/* end of painting area */
+
+
+

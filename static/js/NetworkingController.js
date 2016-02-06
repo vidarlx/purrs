@@ -13,6 +13,10 @@ var NetworkingController = function () {
         socket.on('image_updated', function (image) {
             GameClient.redrawImage(image);
         });
+        
+        socket.on('new_message', function (message) {
+            GameClient.appendMessages(message);
+        });
 
     }
 

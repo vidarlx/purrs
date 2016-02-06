@@ -73,6 +73,7 @@ var GameClient = function () {
         NetworkingController.addToDrawingQueue();
     };
 
+    /** gui methods */
     var sendAnswer = function () {
         var answer = document.querySelector('#answer').value;
         NetworkingController.sendAnswer(socket.id, answer);
@@ -95,6 +96,21 @@ var GameClient = function () {
     var hideWordBox = function (word) {
         document.querySelector('#wordBox').style.display = 'none';
     };
+    
+    var appendMessages = function (data) {
+        console.log(data)
+        var messagesList = document.querySelector('ul#messagesList');
+        var li = document.createElement('li');
+        var user = document.createElement('span');
+        user.classList.add('user');
+        user.innerHTML = data.player.name;
+        var txt = document.createTextNode(': ' + data.message.answer);
+        
+        li.appendChild(user);
+        li.appendChild(txt);
+
+        messagesList.appendChild(li);
+    };
 
     var startNewGame = function (data) {
         DrawingController.clearCanvas();
@@ -109,6 +125,8 @@ var GameClient = function () {
             disableDrawingMode();
         }
     };
+    
+    /** end of gui methods */
 
     return {
         showPlayers: showPlayers,
@@ -116,7 +134,8 @@ var GameClient = function () {
         enableDrawingMode: enableDrawingMode,
         addToDrawQueue: addToDrawQueue,
         startNewGame: startNewGame,
-        sendAnswer: sendAnswer
+        sendAnswer: sendAnswer,
+        appendMessages: appendMessages
     };
 }();
 
