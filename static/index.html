@@ -15,12 +15,12 @@
                     </ul>
                 </div>
                 <button id="addToQueue" onClick="GameClient.addToDrawQueue()">Draw</button>
-                
+
                 <div id="wordBox">
                     You are drawing now. The word is: 
                     <p id="word"></p>
                 </div>
-                
+
                 <div id="waitingBox">
                     <p><b>Drawing queue is empty. Do you want to draw?</b></p>
                 </div>
@@ -46,11 +46,11 @@
                     <div id="messages">
                         <ul id="messagesList"></ul>
                     </div>
-                    <input type="text" id="answer" />
+                    <input type="text" id="answer" onkeydown="enter()" />
                     <button id="sendAnswer" onClick="GameClient.sendAnswer()">Send</button>
                 </div>
 
-                
+
             </div>
 
             <div style="clear: both;"></div>
@@ -58,11 +58,20 @@
 
         <script src="/socket.io/socket.io.js"></script>
         <script>
-                    var socket = io();
+                        var socket = io();
         </script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
         <script src="js/GameClient.js"></script>
         <script src="js/NetworkingController.js"></script>
         <script src="js/DrawingController.js"></script>
+
+        <script type="text/javascript">
+                        function enter() {
+                            if (event.keyCode === 13) {
+                                document.getElementById('sendAnswer').click();
+                                document.getElementById('answer').value = '';
+                            }
+                        }
+        </script>
     </body>
 </html>
