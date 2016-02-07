@@ -30,6 +30,24 @@
     font-weight: bold;
 }
 
+#left-pane .points {
+    float:right;
+}
+
+#left-pane ul#optionsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#left-pane ul#optionsList li:before {
+    content: "\00BB \0020";
+}
+
+#left-pane ul#optionsList li:hover {
+    cursor: pointer;
+    color: #080;
+}
+
 /*** end of left pane */
 
 /***** right pane */

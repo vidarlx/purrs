@@ -45,13 +45,18 @@ var NetworkingController = function () {
             answer: answer
         });
     }
+    
+    function sendNewName(name, playerId) {
+        socket.emit('change_name', name, playerId);
+    }
 
     return {
         handleEvents: handleEvents,
         newGame: newGame,
         sendImage: sendImage,
         addToDrawingQueue: addToDrawingQueue,
-        sendAnswer: sendAnswer
+        sendAnswer: sendAnswer,
+        sendNewName: sendNewName
     };
 }();
 

@@ -14,7 +14,11 @@
                         <!-- players list loaded dynamically -->
                     </ul>
                 </div>
-                <button id="addToQueue" onClick="GameClient.addToDrawQueue()">Draw</button>
+                <hr />
+                <ul id="optionsList">
+                    <li onClick="GameClient.changeName()">Change name</li>
+                    <li id="addToQueue" onClick="GameClient.addToDrawQueue()">Draw</li>
+                </ul>
 
                 <div id="wordBox">
                     You are drawing now. The word is: 

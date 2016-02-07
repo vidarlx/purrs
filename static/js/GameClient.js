@@ -16,7 +16,12 @@ var GameClient = function () {
             player = players[playersIDs[i]];
 
             var li = document.createElement('li');
-            li.innerHTML = player.name + ' (' + player.points + ')';
+            var span = document.createElement('span');
+            span.classList.add('points');
+            span.innerHTML = player.points;
+
+            li.appendChild(document.createTextNode(player.name));
+            li.appendChild(span);
             li.addEventListener('click', function () {
                 newGame(player.name);
             }, false);
@@ -78,11 +83,11 @@ var GameClient = function () {
         var answer = document.querySelector('#answer').value;
         NetworkingController.sendAnswer(socket.id, answer);
     };
-    
+
     var showAnswerBox = function () {
         document.querySelector('#messagingBox').style.display = 'block';
     };
-    
+
     var hideAnswerBox = function () {
         document.querySelector('#messagingBox').style.display = 'none';
     };
@@ -90,15 +95,15 @@ var GameClient = function () {
     var showWordToGuess = function (word) {
         var wordElement = document.querySelector('#word');
         wordElement.innerHTML = word;
-        
+
         var wordBox = document.querySelector('#wordBox');
         wordBox.style.display = 'block';
     };
-    
+
     var hideWordBox = function () {
         document.querySelector('#wordBox').style.display = 'none';
     };
-    
+
     var appendMessages = function (data) {
         var messagesList = document.querySelector('ul#messagesList');
         var li = document.createElement('li');
@@ -106,23 +111,23 @@ var GameClient = function () {
         user.classList.add('user');
         user.innerHTML = data.player.name;
         var txt = document.createTextNode(': ' + data.message.answer);
-        
+
         li.appendChild(user);
         li.appendChild(txt);
 
         messagesList.appendChild(li);
     };
-    
+
     var showWarningBox = function () {
         var warningBox = document.querySelector('#waitingBox');
         warningBox.style.display = 'block';
     };
-    
+
     var hideWarningBox = function () {
         var warningBox = document.querySelector('#waitingBox');
         warningBox.style.display = 'none';
     };
-    
+
     var startNewGame = function (data) {
         DrawingController.clearCanvas();
 
@@ -135,14 +140,21 @@ var GameClient = function () {
             //showAnswerBox();
             disableDrawingMode();
         }
-        
+
         hideWarningBox();
     };
-    
+
     var cleanAfterGame = function () {
         showWordBox();
-    }
-    
+    };
+
+    var changeName = function () {
+        var name = prompt('Type new name');
+        if (name) {
+            NetworkingController.sendNewName(name, socket.id);
+        }
+    };
+
     /** end of gui methods */
 
     return {
@@ -152,7 +164,8 @@ var GameClient = function () {
         addToDrawQueue: addToDrawQueue,
         startNewGame: startNewGame,
         sendAnswer: sendAnswer,
-        appendMessages: appendMessages
+        appendMessages: appendMessages,
+        changeName: changeName
     };
 }();
 
