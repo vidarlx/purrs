@@ -1,10 +1,10 @@
 {
   "name": "wordf",
-  "version": "0.1.1",
+  "version": "0.9.0",
   "description": "scrabble",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha tests/"
   },
   "author": "lax@lax.net.pl",
   "license": "ISC",

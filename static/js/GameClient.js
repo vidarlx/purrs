@@ -2,6 +2,7 @@
 
 var currentImage = null;
 var timer = null;
+var h_gameTimer = null;
 
 var GameClient = function () {
     var showPlayers = function (players) {
@@ -142,6 +143,7 @@ var GameClient = function () {
         }
 
         hideWarningBox();
+        startTimer(data.timer)
     };
 
     var cleanAfterGame = function () {
@@ -155,7 +157,44 @@ var GameClient = function () {
         }
     };
 
+    var startTimer = function (timerValue) {
+        console.info('Starting timer %s', timerValue);
+        gTimer = parseInt(timerValue, 10);
+
+        _decreaseTimer();
+    };
+
+    var _decreaseTimer = function (callback) {
+        if (gTimer <= 0) {
+            return;
+        }
+
+        h_gameTimer = setTimeout(function () {
+            gTimer--;
+            clearTimeout(h_gameTimer);
+
+            _timerGuiUpdate(gTimer);
+            _decreaseTimer(callback);
+        }, 1000);
+    };
+
+    var _timerGuiUpdate = function (time) {
+        var timerBox = document.querySelector('#timer > h2');
+
+        var minutes = Math.floor(time / 60);
+        var seconds = time - 60 * minutes;
+        var formatedDate = pad(minutes, 2) + ':' + pad(seconds, 2);
+        timerBox.innerHTML = formatedDate;
+    }
+
     /** end of gui methods */
+
+    function pad(num, size) {
+        var s = num + "";
+        while (s.length < size)
+            s = "0" + s;
+        return s;
+    }
 
     return {
         showPlayers: showPlayers,
@@ -165,7 +204,8 @@ var GameClient = function () {
         startNewGame: startNewGame,
         sendAnswer: sendAnswer,
         appendMessages: appendMessages,
-        changeName: changeName
+        changeName: changeName,
+        startTimer: startTimer
     };
 }();
 
