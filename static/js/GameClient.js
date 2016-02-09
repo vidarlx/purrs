@@ -2,6 +2,7 @@
 
 var currentImage = null;
 var timer = null;
+var gTimer = null;
 var h_gameTimer = null;
 
 var GameClient = function () {
@@ -78,6 +79,14 @@ var GameClient = function () {
         // add to queue
         NetworkingController.addToDrawingQueue();
     };
+    
+    var applyGameState = function (state) {
+        console.log(state);
+        if (state.inProgress && !gTimer) {
+            gTimer = state.time || 0;
+            startTimer(gTimer);
+        }
+    };
 
     /** gui methods */
     var sendAnswer = function () {
@@ -143,6 +152,7 @@ var GameClient = function () {
         }
 
         hideWarningBox();
+        
         startTimer(data.timer)
     };
 
@@ -205,7 +215,8 @@ var GameClient = function () {
         sendAnswer: sendAnswer,
         appendMessages: appendMessages,
         changeName: changeName,
-        startTimer: startTimer
+        startTimer: startTimer,
+        applyGameState: applyGameState
     };
 }();
 

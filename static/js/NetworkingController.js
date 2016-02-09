@@ -17,6 +17,10 @@ var NetworkingController = function () {
         socket.on('new_message', function (message) {
             GameClient.appendMessages(message);
         });
+        
+        socket.on('game_state', function (state) {
+            GameClient.applyGameState(state);
+        });
 
     }
 
