@@ -176,7 +176,7 @@ var GameClient = function () {
 
     var startTimer = function (timerValue) {
         console.info('Starting timer %s', timerValue);
-        gTimer = parseInt(timerValue, 10);
+        gTimer = parseInt(timerValue - 1, 10);
 
         _decreaseTimer();
     };
