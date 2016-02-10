@@ -161,6 +161,7 @@ var GameClient = function () {
         disableDrawingMode();
         showWarningBox();
         hideWordBox();
+        stopTimer();
     };
 
     var cleanAfterGame = function () {
@@ -179,6 +180,12 @@ var GameClient = function () {
         gTimer = parseInt(timerValue - 1, 10);
 
         _decreaseTimer();
+    };
+    
+    var stopTimer = function () {
+        console.info('Stopping timer');
+        clearTimeout(h_gameTimer);
+        _timerGuiUpdate(0);
     };
 
     var _decreaseTimer = function (callback) {
