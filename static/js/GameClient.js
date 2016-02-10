@@ -155,6 +155,13 @@ var GameClient = function () {
         
         startTimer(data.timer)
     };
+    
+    var stopGame = function () {
+        DrawingController.clearCanvas();
+        disableDrawingMode();
+        showWarningBox();
+        hideWordBox();
+    };
 
     var cleanAfterGame = function () {
         showWordBox();
@@ -212,6 +219,7 @@ var GameClient = function () {
         enableDrawingMode: enableDrawingMode,
         addToDrawQueue: addToDrawQueue,
         startNewGame: startNewGame,
+        stopGame: stopGame,
         sendAnswer: sendAnswer,
         appendMessages: appendMessages,
         changeName: changeName,

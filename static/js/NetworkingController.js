@@ -9,6 +9,10 @@ var NetworkingController = function () {
         socket.on('newGame', function (gameHost) {
             GameClient.startNewGame(gameHost);
         });
+        
+        socket.on('stopGame', function () {
+            GameClient.stopGame();
+        });
 
         socket.on('image_updated', function (image) {
             GameClient.redrawImage(image);
