@@ -1,7 +1,7 @@
 {
-  "name": "wordf",
-  "version": "0.9.0",
-  "description": "scrabble",
+  "name": "quib",
+  "version": "0.9.1",
+  "description": "quib",
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/"
