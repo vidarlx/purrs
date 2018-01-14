@@ -1,10 +1,10 @@
-var Server = require('./lib/network/Server');
-var Game = require('./lib/game/Game.js');
+const Server = require('./lib/network/Server');
+const Game = require('./lib/game/Game.js');
 
 (function () {   
-    var s = new Server();
+    const s = new Server();
     
-    var g = new Game();
+    const g = new Game();
     g.setServer(s);
     g.initialize();
 })();
