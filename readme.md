@@ -1,3 +1,7 @@
+# purrs
+
+Puns implementation based on express and socket.io.
+
 ## How to run
 
 ### Docker
@@ -15,3 +19,8 @@ Click on VM in VirtualBox and choose `Settings > Network > Adapter 1 (NAT Adapte
 You should expose TCP 8999 port.
 
 ### Development server
+
+Just run
+`npm start`
+
+Nodemon is used for watching for changes.

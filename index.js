@@ -1,5 +1,5 @@
-const Server = require('./lib/network/Server');
-const Game = require('./lib/game/Game.js');
+const Server = require('./src/network/Server');
+const Game = require('./src/game/Game.js');
 
 (function () {   
     const s = new Server();

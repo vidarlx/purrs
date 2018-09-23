@@ -1,7 +1,6 @@
-/* global module, Math */
 const fs = require('fs');
-const events = require('events');
-const eventEmitter = new events.EventEmitter();
+const logger = require('../utils/logger').getLogger('Game');
+
 const Timer = require('./Timer')
 const User = require('./User');
 
@@ -28,17 +27,17 @@ class Game {
 
     initialize() {
         this.eventBus.on('player_connected', (user) => {
-            console.log('Game/initialize | *Internal* User connection handling');
+            logger.info('initialize() *Internal* User connection handling');
             this.handleUserConnection(user);
         });
 
         this.eventBus.on('player_disconnected', (id) => {
-            console.log('Game/initialize | *Internal* User disconnection handling');
+            logger.info('initialize() *Internal* User disconnection handling');
             this.handleUserDisconnection(id);
         });
 
         this.eventBus.on('add_to_queue', (id) => {
-            console.log('Game/initialize | *Internal* Adding user to the drawing queue: ', id);
+            logger.debug(`initialize() *Internal* Adding user to the drawing queue: ${id}`);
             // do not queue, just start a game
             if (this.inProgress) {
                 this.addToDrawingQueue(id);
@@ -48,7 +47,7 @@ class Game {
         });
 
         this.eventBus.on('change_name', (data) => {
-            console.log('Game/initialize | *Internal* Changing user\'s name: ', data.id);
+            logger.debug(`initialize() *Internal* Changing user\'s name: ${data.id}`);
             if (this.onlinePlayers.hasOwnProperty(data.id)) {
                 let oldName = this.onlinePlayers[data.id].getName();
                 this.onlinePlayers[data.id].setName(data.name);
@@ -56,13 +55,13 @@ class Game {
 
                 this.eventBus.emit('s_newMessage', {
                     player: { name: MASTER_NAME },
-                    message: { answer: oldName + ' changed name to ' + data.name }
+                    message: { answer: `${oldName} changed name to ${data.name}` }
                 });
             }
         });
 
         this.eventBus.on('new_answer', (data) => {
-            console.log('Game/initialize | *Internal* Checking answer');
+            logger.debug('initialize() | *Internal* Checking answer');
 
             this.eventBus.emit('s_newMessage', {
                 player: this.onlinePlayers[data.playerId],
@@ -102,10 +101,10 @@ class Game {
         this.onlinePlayers[id] = user;
 
         // emit to the server
-        console.log('Game/handleUser | Emmiting updated list of players to the server');
+        logger.info('handleUserConnection() Emmiting updated list of players to the server');
         this.eventBus.emit('s_newMessage', {
             player: { name: MASTER_NAME },
-            message: { answer: this.onlinePlayers[id].getName() + ' connected to the game.' }
+            message: { answer:`${this.onlinePlayers[id].getName()} connected to the game.` }
         });
         this.eventBus.emit('s_playersListUpdated', this.onlinePlayers);
         this.eventBus.emit('s_gameState', this.getState());
@@ -114,7 +113,7 @@ class Game {
     handleUserDisconnection(id) {
         // remove the game if it is host
         if (this.inProgress === id) {
-            console.log('Game/handleUserDisconnection | Game host left.');
+            logger.info('handleUserDisconnection() Game host left.');
             this.inProgress = false;
 
             this.nextPlayerTurn();
@@ -128,7 +127,7 @@ class Game {
         delete this.onlinePlayers[id];
 
         // emit to the server
-        console.log('Game/handleUser | Emmiting updated list of players to the server');
+        logger.info('handleUserDisconnection() Emmiting updated list of players to the server');
         this.eventBus.emit('s_playersListUpdated', this.onlinePlayers);
     };
 
@@ -141,12 +140,12 @@ class Game {
                 message: { answer: this.onlinePlayers[id].getName() + ' were added to the drawing queue' }
             });
         } else {
-            console.log('Player %s is already queued', id);
+            logger.debug(`addToDrawingQueue() Player ${id} is already queued`);
         }
     };
 
     startGame(drawingPlayerId) {
-        console.log('Game/startGame | Starting new game. The host is: ', drawingPlayerId);
+        logger.log(`startGame() Starting new game. The host is: ${drawingPlayerId}`);
         this.initGame(drawingPlayerId)
 
         // emit to server
@@ -158,7 +157,7 @@ class Game {
     };
 
     stopGame() {
-        console.log('Game/startGame | Stopping game');
+        logger.log('stopGame() Stopping game');
 
         this.inProgress = false;
         this.timer = null;
@@ -178,15 +177,12 @@ class Game {
         timer.run();
 
         this.timer = timer;
-
         this.word = this.randomWord();
-        console.info('Word to guess is: %s', this.word);
-
-
+        logger.log(`initGame() Word to guess is: ${this.word}`);
     };
 
     nextPlayerTurn() {
-        console.log('Game/nextPlayerTurn | Starting new game if queued');
+        logger.info('nextPlayerTurn() Starting new game if queued');
         let currentPlayer = null;
         if (this.drawQueue.length > 0) {
             currentPlayer = this.drawQueue.pop();
@@ -194,7 +190,7 @@ class Game {
 
             this.eventBus.emit('s_newMessage', {
                 player: { name: MASTER_NAME },
-                message: { answer: 'User' + this.onlinePlayers[currentPlayer].getName() + ' is drawing now.' }
+                message: { answer: `User ${this.onlinePlayers[currentPlayer].getName()} is drawing now.` }
             });
         } else {
             this.stopGame();
@@ -202,7 +198,7 @@ class Game {
     };
 
     randomWord() {
-        let phrasesFile = './lib/resources/phrases.js';
+        let phrasesFile = './src/resources/phrases.js';
         // parse string to transform it to js array
         let phrases = fs.readFileSync(phrasesFile).toString();
         phrases = eval(phrases);
@@ -212,10 +208,10 @@ class Game {
 
     isCorrectAnswer(answer) {
         if (this.word === answer) {
-            console.log('Correct answer sent');
+            logger.info('isCorrectAnswer() Correct answer sent');
             return true;
         }
-        console.log('Incorrect answer');
+        logger.info('isCorrectAnswer() Incorrect answer');
         return false;
     };
 
@@ -226,7 +222,7 @@ class Game {
 
         this.eventBus.emit('s_newMessage', {
             player: { name: MASTER_NAME },
-            message: { answer: 'Time elapsed. -' + PENALTY_POINTS + ' for drawing player.' }
+            message: { answer: `Time elapsed. - ${PENALTY_POINTS} added to drawing player account.` }
         });
 
         this.eventBus.emit('s_playersListUpdated', this.onlinePlayers);
