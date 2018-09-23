@@ -3,11 +3,12 @@ const logger = require('../utils/logger').getLogger('Game');
 
 const Timer = require('./Timer')
 const User = require('./User');
+const config = require('../config');
 
-const MASTER_NAME = 'Game Master';
-const TIME_FOR_GUESS = 120;
-const PENALTY_POINTS = 20;
-const POINTS_FOR_DRAWING = 50;
+const MASTER_NAME = config.game.master_name;
+const TIME_FOR_GUESS = config.game_time_for_guess;
+const PENALTY_POINTS = config.game.penalty_points;
+const POINTS_FOR_DRAWING =  config.game.reward_points;;
 
 class Game {
     constructor() {
@@ -216,9 +217,10 @@ class Game {
     };
 
     _timeElapsed() {
-        console.info('Time elapsed. User was punished');
         let currentPlayer = this.onlinePlayers[this.inProgress];
         currentPlayer.decreasePoints(10);
+
+        logger.info(`_timeElapsed() Time elapsed. Added penalty points to the account of user: ${currentPlayer.getName()}`);
 
         this.eventBus.emit('s_newMessage', {
             player: { name: MASTER_NAME },
